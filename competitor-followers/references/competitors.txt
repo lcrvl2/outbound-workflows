@@ -1,0 +1,37 @@
+# Competitor Exclusion List
+# Companies in this list will be EXCLUDED from ICP qualification
+# Format: one domain per line (lowercase, no https://)
+
+# Direct Competitors (social media management tools)
+hootsuite.com
+sproutsocial.com
+buffer.com
+iconosquare.com
+sprinklr.com
+later.com
+planable.io
+sendible.com
+socialbee.com
+loomly.com
+publer.io
+socialflow.com
+khoros.com
+emplifi.io
+brandwatch.com
+meltwater.com
+falcon.io
+facelift-bbt.com
+oktopost.com
+zoho.com
+eclincher.com
+socialpilot.co
+crowdfireapp.com
+coschedule.com
+statusbrew.com
+vistaprint.com
+metricool.com
+swello.com
+kontentino.com
+
+# Add your own product domain here
+# yourproduct.com

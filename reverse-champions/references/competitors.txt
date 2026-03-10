@@ -1,0 +1,32 @@
+# Competitor domains - one per line
+# Companies on this list are auto-excluded at the validation step
+# These are social media management platforms that compete with Agorapulse
+hootsuite.com
+sproutsocial.com
+buffer.com
+iconosquare.com
+sprinklr.com
+later.com
+planable.io
+sendible.com
+socialbee.com
+loomly.com
+publer.io
+socialflow.com
+khoros.com
+emplifi.io
+brandwatch.com
+meltwater.com
+falcon.io
+facelift-bbt.com
+oktopost.com
+zoho.com
+eclincher.com
+socialpilot.co
+crowdfireapp.com
+coschedule.com
+statusbrew.com
+vistasocial.com
+metricool.com
+swello.com
+kontentino.com

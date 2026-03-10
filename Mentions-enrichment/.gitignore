@@ -1,0 +1,23 @@
+# API credentials
+.env
+
+# Archived directories
+master_archive/
+apollo-accounts_archive/
+generated-outputs/
+
+# Per-competitor temporary data
+data/*/generated-outputs/
+data/*/weekly-reports/
+data/*/unqualified/
+
+# Keep .gitkeep files
+!.gitkeep
+
+# Logs (keep directory via .gitkeep)
+logs/*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo

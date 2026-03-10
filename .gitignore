@@ -1,0 +1,32 @@
+# Credentials
+.env
+*.env
+
+# Live data — master tracking files and run artifacts
+master/*.csv
+**/master/*.csv
+generated-outputs/
+**/generated-outputs/
+tool-results/
+
+# Root-level data files
+*.csv
+jobs_*.json
+
+# Logs
+logs/
+*.log
+
+# Python
+**/__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# Skill files (Claude Code internal)
+*.skill

@@ -1,0 +1,149 @@
+# Domain Filter List for Mentions Enrichment
+# These domains are filtered out when searching for company websites
+# They typically appear in search results but are not official company websites
+
+# =============================================================================
+# SOCIAL MEDIA
+# =============================================================================
+facebook.com
+instagram.com
+youtube.com
+twitter.com
+x.com
+linkedin.com
+tiktok.com
+pinterest.com
+threads.net
+
+# =============================================================================
+# APP STORES
+# =============================================================================
+apps.apple.com
+play.google.com
+appstore.com
+
+# =============================================================================
+# REFERENCE / INFO SITES
+# =============================================================================
+wikipedia.org
+wikidata.org
+crunchbase.com
+bloomberg.com
+reuters.com
+forbes.com
+techcrunch.com
+
+# =============================================================================
+# REVIEW / DIRECTORY SITES
+# =============================================================================
+yelp.com
+tripadvisor.com
+glassdoor.com
+trustpilot.com
+g2.com
+capterra.com
+softwareadvice.com
+
+# =============================================================================
+# NEWS AGGREGATORS
+# =============================================================================
+news.google.com
+news.yahoo.com
+msn.com
+
+# =============================================================================
+# E-COMMERCE / MARKETPLACES
+# =============================================================================
+amazon.com
+ebay.com
+etsy.com
+shopify.com
+
+# =============================================================================
+# JOB / BUSINESS DATA SITES
+# =============================================================================
+indeed.com
+zoominfo.com
+dnb.com
+hoovers.com
+
+# =============================================================================
+# LOCAL BUSINESS DIRECTORIES
+# =============================================================================
+yellowpages.com
+manta.com
+bbb.org
+chamberofcommerce.com
+whitepages.com
+superpages.com
+citysearch.com
+
+# =============================================================================
+# GOVERNMENT / REGISTRY SITES
+# =============================================================================
+sec.gov
+companieshouse.gov.uk
+opencorporates.com
+
+# =============================================================================
+# STOCK / FINANCE SITES
+# =============================================================================
+finance.yahoo.com
+marketwatch.com
+seekingalpha.com
+fool.com
+investopedia.com
+stockanalysis.com
+
+# =============================================================================
+# DOMAIN REGISTRARS
+# =============================================================================
+godaddy.com
+namecheap.com
+whois.com
+who.is
+
+# =============================================================================
+# PR / PRESS RELEASE SITES
+# =============================================================================
+prnewswire.com
+businesswire.com
+globenewswire.com
+prweb.com
+accesswire.com
+
+# =============================================================================
+# MAJOR NEWS SITES (articles about companies, not company sites)
+# =============================================================================
+bbc.com
+bbc.co.uk
+cnn.com
+nytimes.com
+wsj.com
+theguardian.com
+usatoday.com
+washingtonpost.com
+
+# =============================================================================
+# URL SHORTENERS / LINK-IN-BIO SERVICES
+# =============================================================================
+bit.ly
+bitly.com
+beacons.ai
+linktr.ee
+linktree.com
+ow.ly
+t.co
+tinyurl.com
+goo.gl
+rebrand.ly
+short.io
+lnk.bio
+bio.link
+stan.store
+hoo.be
+snipfeed.co
+campsite.bio
+tap.bio
+shorby.com
+koji.to
