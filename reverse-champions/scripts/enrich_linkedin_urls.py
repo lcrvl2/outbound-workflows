@@ -96,7 +96,7 @@ def find_linkedin_url(name, email, company):
     """Search Apollo for a person by name + email to get their LinkedIn URL"""
     # Try exact email match first
     try:
-        data = apollo_request('POST', 'mixed_people/search', {
+        data = apollo_request('POST', 'mixed_people/api_search', {
             'q_keywords': email,
             'page': 1,
             'per_page': 1,
@@ -111,7 +111,7 @@ def find_linkedin_url(name, email, company):
 
     # Fallback: search by name + company
     try:
-        data = apollo_request('POST', 'mixed_people/search', {
+        data = apollo_request('POST', 'mixed_people/api_search', {
             'q_keywords': f'{name} {company}',
             'page': 1,
             'per_page': 3,

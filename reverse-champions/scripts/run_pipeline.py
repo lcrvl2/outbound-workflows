@@ -88,6 +88,30 @@ def find_output_file(output_dir, filename):
 # STEP RUNNERS
 # =============================================================================
 
+def run_fetch_from_apollo(source, output_dir, days=7, auto_confirm=False):
+    """Step 1 (production): Fetch champions from Apollo by Became Paid Date"""
+    print("\n" + "=" * 70)
+    print("PIPELINE STEP 1: FETCH FROM APOLLO")
+    print("=" * 70)
+
+    cmd = [
+        sys.executable, str(SCRIPTS_DIR / 'fetch_from_apollo.py'),
+        '--source', source,
+        '--days', str(days),
+        '--output-dir', str(output_dir),
+    ]
+    if auto_confirm:
+        cmd.append('--yes')
+
+    result = subprocess.run(cmd)
+
+    if result.returncode != 0:
+        print(f"Error: fetch_from_apollo.py exited with code {result.returncode}")
+        return None
+
+    return find_output_file(output_dir, 'champions_to_scrape.json')
+
+
 def run_load_champions(csv_path, source, output_dir, col_name=None, col_email=None,
                        col_company=None, col_linkedin=None, auto_confirm=False):
     """Step 1: Load champions from CSV"""
@@ -319,36 +343,34 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Full pipeline
-  python run_pipeline.py --source q1_2025_champions \\
-    --csv /path/to/export.csv --playbook /path/to/playbook.md
+  # Weekly production run (Apollo source, last 7 days)
+  python run_pipeline.py --source cw_weekly \\
+    --from-apollo --sequence-id 698f40f00ef2f30021af248d --skip-generate
 
-  # With ICP filters
-  python run_pipeline.py --source q1_2025_champions \\
-    --csv export.csv --playbook playbook.md \\
-    --min-employees 50 --max-employees 5000 --geo "United States"
+  # Apollo source with custom lookback
+  python run_pipeline.py --source cw_weekly \\
+    --from-apollo --days 14 --sequence-id 698f40f00ef2f30021af248d --skip-generate
 
-  # Custom column mapping
-  python run_pipeline.py --source q1_2025_champions \\
-    --csv export.csv --playbook playbook.md \\
+  # One-time CSV run (pilot or backfill)
+  python run_pipeline.py --source cw_2025 \\
+    --csv /path/to/export.csv --sequence-id 698f40f00ef2f30021af248d --skip-generate
+
+  # Custom column mapping for CSV
+  python run_pipeline.py --source cw_2025 \\
+    --csv export.csv --sequence-id 698f40f00ef2f30021af248d --skip-generate \\
     --col-name "Full Name" --col-email "Work Email" --col-company "Account"
-
-  # Skip to email generation (already have personas)
-  python run_pipeline.py --source q1_2025_champions --playbook playbook.md \\
-    --skip-load --skip-enrich --skip-scrape --skip-filter \\
-    --skip-validate --skip-personas --input-personas personas_found.json
-
-  # Generate emails only, don't push to Apollo
-  python run_pipeline.py --source q1_2025_champions \\
-    --csv export.csv --playbook playbook.md --skip-apollo
         """,
     )
     parser.add_argument('--source', required=True,
                         help='Source name for this run (e.g., q1_2025_champions)')
+    parser.add_argument('--from-apollo', action='store_true',
+                        help='Fetch champions from Apollo (Became Paid Date filter) instead of CSV')
+    parser.add_argument('--days', type=int, default=7,
+                        help='Days lookback for --from-apollo (default: 7)')
     parser.add_argument('--csv', default=None,
                         help='Path to input CSV with champion contacts')
-    parser.add_argument('--playbook', required=True,
-                        help='Path to GTM playbook markdown file')
+    parser.add_argument('--playbook', default=None,
+                        help='Path to GTM playbook markdown file (required only if generating emails)')
 
     # Column mapping
     parser.add_argument('--col-name', default=None,
@@ -408,19 +430,15 @@ Examples:
     args = parser.parse_args()
 
     # Validate required inputs
-    if not args.skip_load and not args.csv:
-        print("Error: --csv is required (or use --skip-load with --input-champions)")
+    if not args.skip_load and not args.csv and not args.from_apollo:
+        print("Error: --csv or --from-apollo is required (or use --skip-load with --input-champions)")
         sys.exit(1)
 
     if args.csv and not Path(args.csv).exists():
         print(f"Error: CSV file not found: {args.csv}")
         sys.exit(1)
 
-    if not args.skip_generate and not args.playbook:
-        print("Error: --playbook is required for email generation")
-        sys.exit(1)
-
-    if args.playbook and not Path(args.playbook).exists():
+    if not args.skip_generate and args.playbook and not Path(args.playbook).exists():
         print(f"Error: Playbook not found: {args.playbook}")
         sys.exit(1)
 
@@ -464,12 +482,19 @@ Examples:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # =========================================================================
-    # Step 1: Load champions from CSV
+    # Step 1: Load champions (from Apollo or CSV)
     # =========================================================================
     if args.skip_load:
         champions_json = args.input_champions
         if champions_json:
             print(f"\nSkipping load. Using: {champions_json}")
+    elif args.from_apollo:
+        champions_json = run_fetch_from_apollo(
+            args.source, output_dir, days=args.days, auto_confirm=args.yes,
+        )
+        if not champions_json:
+            print("\nPipeline aborted at fetch step.")
+            sys.exit(1)
     else:
         champions_json = run_load_champions(
             args.csv, args.source, output_dir,
@@ -587,11 +612,13 @@ Examples:
     # Step 8: Push to Apollo
     # =========================================================================
     if not args.skip_apollo:
-        if not emails_json:
-            print("Error: No emails JSON available for Apollo push.")
+        # Use emails_json if generated, otherwise fall back to personas_json
+        apollo_input = emails_json if (emails_json and not args.skip_generate) else personas_json
+        if not apollo_input:
+            print("Error: No personas or emails JSON available for Apollo push.")
             sys.exit(1)
         success = run_push_to_apollo(
-            emails_json, args.source, args.sequence_id, args.yes,
+            apollo_input, args.source, args.sequence_id, args.yes,
         )
         if not success:
             print("\nApollo push failed. Generated emails are still in generated-outputs/.")

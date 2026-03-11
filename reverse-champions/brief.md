@@ -98,10 +98,11 @@ For each CW user, identify the last 2 companies they worked at previously, find 
 
 ## Next Steps
 
-- [ ] Confirm CW user export fields from Salesforce (enough to identify the person + their company)
-- [ ] Lock initial ICP/company filters and suppression lists
-- [ ] Get a real closed-won export CSV with LinkedIn URLs
-- [ ] Create the 4-step sequence in Apollo with the copy above
+- [x] Confirm CW user export fields from Salesforce
+- [x] Lock initial ICP/company filters and suppression lists
+- [x] Get a real closed-won export CSV with LinkedIn URLs
+- [x] Create the 4-step sequence in Apollo (`698f40f00ef2f30021af248d`) with the copy above
+- [x] Custom field `[Org] Became Paid Date` created in Apollo for ongoing Salesforce tracking
 - [ ] Define BDR reply routing: who handles responses, how fast
 - [ ] Brief BDRs on the play: check CRM notes before discovery calls to know champion's switch reasons
 - [ ] Pilot with 2025 CW cohort and validate reply/meeting/SQL rate before scaling

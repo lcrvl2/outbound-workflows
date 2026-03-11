@@ -128,7 +128,7 @@ def apollo_request(method, endpoint, json_data=None, params=None):
 def search_people(domain, titles, max_results=5):
     """Search Apollo for people at a domain with specific titles"""
     try:
-        data = apollo_request('POST', 'mixed_people/search', {
+        data = apollo_request('POST', 'mixed_people/api_search', {
             'q_organization_domains': domain,
             'person_titles': titles,
             'page': 1,

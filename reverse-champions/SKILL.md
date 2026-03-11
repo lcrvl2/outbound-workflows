@@ -32,13 +32,18 @@ Contacts are enrolled into a pre-built 4-email template sequence. No AI email ge
 ## Quick Start
 
 ```bash
-# Full pipeline (testing with CSV)
-python scripts/run_pipeline.py --source q1_champions --csv /path/to/export.csv \
-  --min-employees 200 --sequence-id SEQ_ABC123
+# Weekly production run (pulls from Apollo, last 7 days of Became Paid Date)
+python scripts/run_pipeline.py --source cw_weekly \
+  --from-apollo --sequence-id 698f40f00ef2f30021af248d --skip-generate
 
-# Custom column mapping (when CSV headers don't auto-detect)
-python scripts/run_pipeline.py --source q1_champions --csv export.csv \
-  --min-employees 200 --col-name "Full Name" --col-email "Work Email" --col-company "Account"
+# One-time CSV run (pilot or backfill)
+python scripts/run_pipeline.py --source cw_2025 --csv /path/to/export.csv \
+  --sequence-id 698f40f00ef2f30021af248d --skip-generate
+
+# Custom column mapping for CSV
+python scripts/run_pipeline.py --source cw_2025 --csv export.csv \
+  --sequence-id 698f40f00ef2f30021af248d --skip-generate \
+  --col-name "Full Name" --col-email "Work Email" --col-company "Account"
 ```
 
 ## Pipeline Options
@@ -46,7 +51,9 @@ python scripts/run_pipeline.py --source q1_champions --csv export.csv \
 | Flag | Description | Default |
 |------|-------------|---------|
 | `--source NAME` | Source name for master file tracking | Required |
-| `--csv PATH` | Input CSV with CW contacts (testing only) | Required |
+| `--from-apollo` | Fetch champions from Apollo (Became Paid Date filter) | — |
+| `--days N` | Lookback window for `--from-apollo` | `7` |
+| `--csv PATH` | Input CSV with CW contacts (one-time/backfill) | — |
 | `--col-name COL` | Column name for contact name | Auto-detect |
 | `--col-email COL` | Column name for email | Auto-detect |
 | `--col-company COL` | Column name for company | Auto-detect |
