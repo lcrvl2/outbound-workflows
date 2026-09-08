@@ -220,7 +220,7 @@ Detailed step-by-step instructions discovered during interactive learning runs. 
 
 ### Result from first run
 - Sequence: "2025-09 Growth Squad: EN Companies Hiring Social Media Roles Email Sequence" (found under Team tab)
-- Email: lauren.martin@meetagorapulse.com
+- Email: a teammate's `@meetagorapulse.com` address
 - Result: "Finished adding 26 out of 26 contacts to sequence"
 
 ---
