@@ -1,4 +1,5 @@
 ---
+name: competitor-followers
 trigger: "process competitor followers" OR "scrape LinkedIn followers" OR "competitor follower outreach"
 description: Extract LinkedIn followers from competitor pages, filter by ICP + persona, and output qualified contact CSVs
 requires_chrome: false
@@ -219,7 +220,8 @@ Track in master file CSV:
 
 ### GTM Playbook Integration
 1. Run `gtm-playbook` on your own product to understand positioning
-2. Use playbook context in `references/company_icp_filter_prompt.md` for better qualification
+2. Use the playbook's verticals and pain points to set `--min-employees` / `--max-employees`
+   and to extend `references/competitors.txt`
 3. Reference playbook pain points in future email generation (v2)
 
 ## API Credentials
@@ -243,7 +245,7 @@ ANTHROPIC_API_KEY=sk-ant-xxx
 - Add longer delays in `find_personas.py` (increase rate limit from 1s to 2s)
 
 ### Error: "No companies passed ICP filter"
-- Review `references/company_icp_filter_prompt.md` criteria
+- Review the filters in `scripts/qualify_companies.py` (employee range, industry, competitor list)
 - Adjust `--min-employees` / `--max-employees` range
 - Check if follower list contains mostly individuals vs. companies
 

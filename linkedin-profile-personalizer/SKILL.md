@@ -1,5 +1,11 @@
 ---
-skill: linkedin-profile-personalizer
+name: linkedin-profile-personalizer
+description: >
+  Turn a list of LinkedIn profile URLs into personalized cold email openings. Scrapes each
+  profile via Apify, infers the business pain the role implies, and writes a 1-2 sentence
+  hook per contact. Use when: (1) User mentions "personalize hooks", "LinkedIn personalizer",
+  or wants openings written from profiles, (2) A contact list needs 1:1 openings before
+  sequence enrollment. Exports CSV and can patch the hook back onto Apollo contacts.
 version: 1.0.0
 status: active
 ---

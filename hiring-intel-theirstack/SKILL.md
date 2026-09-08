@@ -1,3 +1,15 @@
+---
+name: hiring-intel-theirstack
+description: >
+  Autonomous pipeline that pulls social media hiring signals from the TheirStack API, extracts
+  structured intel from the job descriptions it returns, generates personalized 1:1 email
+  sequences, and pushes them to Apollo.io with two-tier contact matching. Use when: (1) User
+  mentions "theirstack", "hiring intel theirstack", or asks for hiring signals without scraping,
+  (2) Running the hiring-intel pipeline incrementally on a schedule, (3) Job descriptions are
+  needed without the cost of scraping them. Alternative to `hiring-intel`, which sources the same
+  signals via Apollo org search plus web scraping.
+---
+
 # Hiring Intel TheirStack
 
 **Autonomous TheirStack → Apollo pipeline for social media hiring signals**
