@@ -4,7 +4,7 @@
 
 set -e
 
-SKILL_DIR="/Users/lucascarval/Desktop/Agentic Workflows/Outbound/Mentions-enrichment"
+SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$SKILL_DIR"
 
 COMPETITOR="buffer"
@@ -13,7 +13,7 @@ ALERT_ID="2718710"  # buff.ly mentions alert
 SOURCE="buffer"
 
 # Calculate since-date (7 days ago)
-SINCE_DATE=$(date -v-7d +%Y-%m-%d)
+SINCE_DATE=$(date -v-7d +%Y-%m-%d 2>/dev/null || date -d "7 days ago" +%Y-%m-%d)
 
 echo "=== Weekly $COMPETITOR tracking ==="
 echo "Since date: $SINCE_DATE"
