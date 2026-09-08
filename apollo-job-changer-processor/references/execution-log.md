@@ -22,28 +22,28 @@
 #### Step 1.2 — Identify "update available" contacts
 - **Action**: Took a11y snapshot to identify contacts with job changes
 - **Result**: 3 contacts found with "Update available" badges:
-  1. Chelsea Brooks — Cosmetologist at outdoor network
-  2. Sarah Bierschwale — Web and Digital Specialist at University of Maine at Farmington
-  3. Mel Smith — Marketing Specialist at Brock University
+  1. Contact A — Cosmetologist at an outdoor network
+  2. Contact B — Web and Digital Specialist at a university
+  3. Contact C — Marketing Specialist at a university
 - **UI Notes**: Each contact with an update shows 3 buttons inline: `button "Update available"` (info badge), `button "Accept update"` (action trigger), `button "Dismiss update"`. The "Accept update" button opens the Update Contact popup.
 
-#### Step 1.3 — Process first contact: Chelsea Brooks
-- **a. Click "Accept update"**: Clicked `button "Accept update"` next to Chelsea Brooks. Popup opened showing: "Mel Smith" → heading with new company name. Default is "Update existing contact" (radio, checked).
+#### Step 1.3 — Process first contact: Contact A
+- **a. Click "Accept update"**: Clicked `button "Accept update"` next to Contact A. Popup opened showing: "Contact C" → heading with new company name. Default is "Update existing contact" (radio, checked).
 - **b. Create new contact**: Clicked `radio "Create new contact"`. This revealed the stage dropdown and "Show More Settings" link.
 - **c. Set stage to "New"**: Clicked `combobox` (stage dropdown) to open it. Options appeared as StaticText elements: New, MQL, Working, Qualified, Nurturing, Unqualified, Nurture - Close, Unqualified - Spam, Unqualified - Bounced, Unqualified - Unsubscribed. Clicked "New".
 - **d. Click "Show More Settings"**: Clicked StaticText "Show More Settings". Expanded to reveal: Set Owner (radio: Keep existing one / Add new one), Add to Sequence (combobox), Add to Lists (combobox), Mark current sequences as finished (checkbox).
 - **e. Add to enriched list**: Clicked "Add to Lists" combobox textbox, typed "Job changers intent". Dropdown showed options including "2026-02 Job changers intent - Global (ENRICHED)". Selected it.
 - **f. Mark sequences finished**: Clicked `StaticText "Mark current sequences as finished"`. Verified via `evaluate_script` that the underlying checkbox `checked=true`.
 - **g. Click "Yes, Update"**: Clicked `button "Yes, Update"`. Popup closed, returned to list view.
-- **UI Notes**: Chelsea Brooks' "Update available" badge disappeared after processing.
+- **UI Notes**: Contact A's "Update available" badge disappeared after processing.
 
-#### Step 1.4 — Process contact #2: Sarah Bierschwale
-- **Job change**: University of Maine at Farmington → Xanterra Travel Collection (Web and Digital Specialist)
+#### Step 1.4 — Process contact #2: Contact B
+- **Job change**: a university → a travel company (Web and Digital Specialist)
 - **Flow**: Accept update → Create new contact → Stage "New" → Show More Settings → Add to "2026-02 Job changers intent - Global (ENRICHED)" → Mark sequences finished (verified checked=true) → Yes, Update
 - **Result**: Popup closed successfully. Badge removal async.
 
-#### Step 1.5 — Process contact #3: Mel Smith
-- **Job change**: Brock University → Goodman School of Business at Brock University (Owner)
+#### Step 1.5 — Process contact #3: Contact C
+- **Job change**: a university → a business school (Owner)
 - **Flow**: Accept update → Create new contact → Stage "New" → Show More Settings → Add to "2026-02 Job changers intent - Global (ENRICHED)" → Mark sequences finished (verified checked=true) → Yes, Update
 - **Result**: Popup closed successfully. Badge removal async.
 
@@ -110,7 +110,7 @@
 
 #### Step 2.3 — Push to Salesforce
 - **Action**: Clicked `button "Salesforce"` (expandable, haspopup="menu") in bulk toolbar. Dropdown opened with two options: `StaticText "Push to Salesforce"` and `StaticText "Add to Salesforce Campaign"`. Clicked "Push to Salesforce".
-- **Result**: Toast notification appeared: "Pushing to CRM" / "We are trying to push to your CRM." Toast disappeared after ~10s indicating async completion. No explicit "success" text — completion is detected by toast disappearance. Data refreshed after push (e.g., Sarah Bierschwale's company updated from "University of Maine at Farmington" to "Kind Outside Marketing").
+- **Result**: Toast notification appeared: "Pushing to CRM" / "We are trying to push to your CRM." Toast disappeared after ~10s indicating async completion. No explicit "success" text — completion is detected by toast disappearance. Data refreshed after push (e.g., Contact B's company updated from "a university" to "Kind Outside Marketing").
 - **UI Notes**: Salesforce dropdown: `button "Salesforce"` → opens `menu` with `menuitem "Push to Salesforce"` and `menuitem "Add to Salesforce Campaign"`. Push is async — shows toast, then toast vanishes on completion. Selection (14 checked contacts) is preserved after push. Push also triggers data refresh in the grid.
 
 #### Step 2.4 — Add to SF Campaign
@@ -154,15 +154,15 @@
 
 **URL**: https://app.apollo.io/#/lists/68a3d3b1d927eb000d5975c8
 **List name**: "2025-09 Growth Squad - Job Changers - Current Users OLD Job"
-**Records before cleanup**: 1 (Mel Smith)
+**Records before cleanup**: 1 (Contact C)
 
 #### Step 3.1 — Navigate to EN list
 - **Action**: Navigated to EN list URL via Chrome DevTools MCP
-- **Result**: Page loaded showing **1 record** — only Mel Smith remained.
-- **UI Notes**: Chelsea Brooks and Sarah Bierschwale were automatically removed from the source list when "Create new contact" was selected during Phase 1 processing. Only Mel Smith's OLD record persisted.
+- **Result**: Page loaded showing **1 record** — only Contact C remained.
+- **UI Notes**: Contact A and Contact B were automatically removed from the source list when "Create new contact" was selected during Phase 1 processing. Only Contact C's OLD record persisted.
 
 #### Step 3.2 — Select and remove remaining contact
-- **Action**: Clicked `checkbox "Select current row"` next to Mel Smith. Bulk action toolbar appeared. Clicked `button "Open more actions"` → `menuitem "Remove from List"`. Confirmation dialog: "Are you sure you want to remove this contact from 2025-09 Growth Squad - Job Changers - Current Users OLD Job?". Clicked `button "Remove from list"`.
+- **Action**: Clicked `checkbox "Select current row"` next to Contact C. Bulk action toolbar appeared. Clicked `button "Open more actions"` → `menuitem "Remove from List"`. Confirmation dialog: "Are you sure you want to remove this contact from 2025-09 Growth Squad - Job Changers - Current Users OLD Job?". Clicked `button "Remove from list"`.
 - **Result**: Success toast: "Successfully removed 1 contact from 2025-09 Growth Squad - Job Changers - Current Users OLD Job". List now shows "0 records" and empty state.
 - **UI Notes**: Same removal flow as Phase 2.5. Confirmation dialog text uses "this contact" (singular) vs "these contacts" (plural) depending on selection count. Success toast includes the list name.
 
@@ -220,7 +220,7 @@
 - **Phase 2**: SF Campaign search requires pressing Enter after typing. Results appear in a nested `dialog` dropdown.
 - **Phase 2**: The "Save" button in the multi-section modal changes to "Loading..." (disabled) while processing, then the modal closes automatically.
 - **Phase 2**: "Remove from List" is under "Open more actions" menu, not a top-level button. Has a confirmation dialog before removal.
-- **Phase 3**: "Create new contact" in Phase 1 automatically removes the OLD contact from the source list for some contacts, but not all. Chelsea Brooks and Sarah Bierschwale were auto-removed; Mel Smith was not. This means source list cleanup is still required after Phase 1 to ensure all OLD records are removed.
+- **Phase 3**: "Create new contact" in Phase 1 automatically removes the OLD contact from the source list for some contacts, but not all. Contact A and Contact B were auto-removed; Contact C was not. This means source list cleanup is still required after Phase 1 to ensure all OLD records are removed.
 - **Phase 3**: Confirmation dialog text adapts to selection count: "this contact" (singular) vs "these contacts" (plural).
 - **Phase 3**: Success toast after removal includes the full list name, confirming which list the contact was removed from.
 - **Phase 3**: FR list contacts were removed even though no job changes were detected — this is the correct behavior to reset lists for the next monthly cycle.
