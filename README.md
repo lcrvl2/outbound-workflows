@@ -102,7 +102,9 @@ open -a "Google Chrome" --args --remote-debugging-port=9222
 | `THEIRSTACK_API_KEY` | hiring-intel-theirstack |
 | `CRAWL4AI_BASE_URL` | hiring-intel, reverse-champions, Social-profile-discovery |
 
-Each skill has a `.env.example` listing only the keys it needs.
+Every skill that calls an external API ships a `.env.example` listing only the keys it needs.
+The Claude-only skills (`gtm-playbook`, `targeting-ideas`, `write-sequence`) and the Apollo UI
+automation skills need no keys of their own.
 
 ---
 
