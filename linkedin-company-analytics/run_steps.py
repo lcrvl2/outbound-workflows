@@ -1,30 +1,28 @@
 #!/usr/bin/env python3
-"""Launch step 1 (scrape_followers) and step 2 (scrape_posts) directly."""
+"""Launch step 1 (scrape_followers) and step 2 (scrape_posts) directly.
+
+Usage:
+    python run_steps.py <step> --input <csv> --output-dir <dir> [--yes]
+
+<step> is 1 or 2. Remaining arguments are passed straight through to the
+underlying script, so see its --help for the full list.
+"""
 
 import sys
 import os
-sys.path.insert(0, os.path.dirname(__file__))
 
-INPUT_CSV = '/Users/lucascarval/Desktop/Agentic Workflows/Outbound/ABM accounts.csv'
-OUTPUT_DIR = '/Users/lucascarval/Desktop/Agentic Workflows/Outbound/linkedin-company-analytics/generated-outputs/abm_accounts_feb2026-2026-02-18'
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-step = sys.argv[1] if len(sys.argv) > 1 else '1'
+if len(sys.argv) < 2 or sys.argv[1] not in ('1', '2'):
+    sys.exit(__doc__)
+
+step, passthrough = sys.argv[1], sys.argv[2:]
 
 if step == '1':
-    sys.argv = [
-        'scrape_followers.py',
-        '--input', INPUT_CSV,
-        '--output-dir', OUTPUT_DIR,
-        '--yes',
-    ]
+    sys.argv = ['scrape_followers.py'] + passthrough
     from scripts.scrape_followers import main
-    main()
-elif step == '2':
-    sys.argv = [
-        'scrape_posts.py',
-        '--input', INPUT_CSV,
-        '--output-dir', OUTPUT_DIR,
-        '--yes',
-    ]
+else:
+    sys.argv = ['scrape_posts.py'] + passthrough
     from scripts.scrape_posts import main
-    main()
+
+main()
