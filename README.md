@@ -82,6 +82,10 @@ cp .env.example .env       # fill in your API keys
 pip install -r requirements.txt
 ```
 
+Skills that call no external API ship neither file — `gtm-playbook`, `targeting-ideas`,
+`write-sequence`, the two Apollo UI automation skills, and `linkedin-content-scraper`,
+which reads Apify's public dataset endpoint and needs no token.
+
 ### Chrome (Apollo automation only)
 
 ```bash
